@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tallies</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <style>
+    body {
+      overflow: hidden;
+      margin: 0px;
+      padding: 0px;
+      background: white;
+
+      width: 500px;
+    }
+
+    #titleDiv{
+      background-color: #222;
+      color: #fff;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      text-align: center;      
+      font-weight: bold;      
+    }
+
+    table{
+      width: 480px;
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    tr td:last-child {text-align: end;}
+
+    .fas{
+      color: #ddd; 
+      cursor: pointer;
+    }
+    .fas:hover{ color: #222; }
+
+    .selectedItem{ color: #222; }
+
+    button{
+      float: right;
+      margin: 0 10px 10px 0;
+    }
+
+    input:disabled {
+      background: #fff;
+      border: 0;
+    }
+
+
+    </style>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <div id="titleDiv">
+      Tallys
+    </div>
+    <table id="items">
+    </table>
+    <button id="NewItemButton">New</button>                
+  </body>
+</html>
