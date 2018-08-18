@@ -5,7 +5,7 @@ let items;
 
 function Save(){
 	chrome.storage.sync.set({TallyItems: items}, function() {
-	  console.log('Value is set to ' + items);
+	 // console.log('Value is set to ' + items);
 	});
 }
 
@@ -39,8 +39,6 @@ function PlusClick(item)
 
 function ChangeValue(row, chnageBy)
 {
-	console.log("asd");
-
 	items[row.rowIndex].number = parseInt(items[row.rowIndex].number) + chnageBy;
 
 	if(items[row.rowIndex].show)
