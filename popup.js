@@ -1,12 +1,7 @@
 
 'use strict';
 
-let items = 
-	[
-		{"name":"item1","number":21,"show":false},
-		{"name":"item2","number":5,"show":true},
-		{"name":"item3","number":30,"show":false},
-	]
+let items;
 
 function Save(){
 	chrome.storage.sync.set({TallyItems: items}, function() {
@@ -15,28 +10,38 @@ function Save(){
 }
 
 function Load(callBack){
-	chrome.storage.sync.get(['TallyItems'], function(result) {
-	  console.log('Value currently is ' + result.TallyItems);
-	  items = result.TallyItems;
-	  callBack();
+	chrome.storage.sync.get(['TallyItems'], function(result) 
+	{
+		if(result.TallyItems == null)
+		{
+			items = [];
+		}
+		else
+		{
+			items = result.TallyItems;
+		}
+
+	  	callBack();
 	});
 }
 
 function MinusClick(item)
 {
 	let row = item.target.parentElement.parentElement;
-	NumberChange(row, -1);
+	ChangeValue(row, -1)
 }
 
 function PlusClick(item)
 {
 	let row = item.target.parentElement.parentElement;
-	NumberChange(row, 1);
+	ChangeValue(row, 1)
 }
 
-function NumberChange(row, chnageBy)
+function ChangeValue(row, chnageBy)
 {
-	items[row.rowIndex].number += chnageBy;
+	console.log("asd");
+
+	items[row.rowIndex].number = parseInt(items[row.rowIndex].number) + chnageBy;
 
 	if(items[row.rowIndex].show)
 		chrome.browserAction.setBadgeText({text: items[row.rowIndex].number.toString()});
@@ -70,6 +75,10 @@ function SetShow(item)
 function DeleteItem(ele)
 {
 	let row = ele.target.parentElement.parentElement;
+
+	if(items[row.rowIndex].show)
+		chrome.browserAction.setBadgeText({text: "-"});
+
 	items.splice(row.rowIndex, 1);
 	row.parentNode.removeChild(row);
 
@@ -86,7 +95,6 @@ function NewItem(ele)
 
 function EnableInput(ele)
 {
-	console.log(ele);
 	ele.target.readOnly = false;
 }
 
@@ -109,16 +117,17 @@ function NameChange(ele)
 	}
 }
 
-function NumberChange(e)
+
+function NumberChange(ele)
 {
 	if (event.keyCode === 13 || event.keyCode === 27)
 	{
-		let row = e.target.parentElement.parentElement;
+		let row = ele.target.parentElement.parentElement;
 		let item = items[row.rowIndex];
 
 		if (event.keyCode === 13)
 		{
-			let val = e.target.value;
+			let val = ele.target.value;
 
 			if(val % 1 == 0)
 			{
@@ -128,12 +137,12 @@ function NumberChange(e)
 			else
 			{
 				alert("Not a whole number");
-				e.target.value = item.number;
+				ele.target.value = item.number;
 			}
 
 	    } else {
 	    	event.preventDefault();
-	        e.target.value = item.number;  
+	        ele.target.value = item.number;  
 	    }
 
 	    ele.target.readOnly = true;
@@ -158,6 +167,10 @@ function AddRow(item)
      	let nameInput = row.getElementsByClassName("nameinput")[0];
      	nameInput.addEventListener('dblclick', EnableInput);
      	nameInput.addEventListener('keydown', NameChange);
+
+     	let numberinput = row.getElementsByClassName("numberinput")[0];
+     	numberinput.addEventListener('dblclick', EnableInput);
+     	numberinput.addEventListener('keydown', NumberChange);
 }
 
 document.addEventListener('DOMContentLoaded', function () {

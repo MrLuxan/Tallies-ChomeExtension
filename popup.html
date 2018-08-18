@@ -45,21 +45,47 @@
       margin: 0 10px 10px 0;
     }
 
-    input:disabled {
+    input:read-only {
       background: #fff;
       border: 0;
     }
+  
 
+    #infoI{
+      height: 20px;
+      width: 20px;
+      text-align: center;
+      border-radius: 50%;
+      display: inline-block;
+      line-height: 20px;
+      color: #fff;
+      background-color: #ddd;
+      font-weight: bolder;
+      margin-left: 10px;
+      cursor: help;
+    }
+
+    #infoText{
+      visibility: hidden;
+    }
+
+    #infoI:hover + #infoText {
+      visibility: visible;
+    }
 
     </style>
     <script src="popup.js"></script>
   </head>
   <body>
     <div id="titleDiv">
-      Tallys
+      Tallies
     </div>
     <table id="items">
     </table>
+    <span id="info">
+      <span id="infoI"> i </span>
+      <span id="infoText"> Double click on a name or number to set it's value </span>
+    </span>
     <button id="NewItemButton">New</button>                
   </body>
 </html>
